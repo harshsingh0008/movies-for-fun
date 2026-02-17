@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Movie Explorer</title>
+    <title>MovieExplorer - Smart Movie Discovery</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Inter Font -->
@@ -15,28 +15,22 @@
 </head>
 <body class="dark-mode">
 
-    <!-- ========================================== -->
     <!-- HEADER -->
-    <!-- ========================================== -->
     <header class="navbar">
         <div class="logo">
             🎬 MovieExplorer
         </div>
-
         <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
             <i class="fa-solid fa-moon"></i>
         </button>
     </header>
 
-    <!-- ========================================== -->
     <!-- MAIN CONTAINER -->
-    <!-- ========================================== -->
     <main class="container">
-
-        <!-- HERO -->
+        <!-- HERO SECTION with SEARCH -->
         <section class="hero">
             <h1>Discover Your Next Favorite Movie</h1>
-            <p>Search. Explore. Experience cinema beautifully.</p>
+            <p>Search. Explore. Get AI-powered recommendations.</p>
 
             <div class="search-box">
                 <input 
@@ -51,27 +45,42 @@
             </div>
         </section>
 
-        <!-- MOVIE RESULT -->
+        <!-- HOME SECTIONS (Trending, Top Rated, etc) -->
+        <div id="home-sections">
+            <!-- Sections will be dynamically added here -->
+        </div>
+
+        <!-- MOVIE RESULT / DETAILS CONTAINER -->
         <section class="movie-section">
             <div id="movie-container" class="movie-container">
-                <!-- Movie card will render here -->
+                <!-- Welcome message -->
+                <div class="welcome-message">
+                    <h2>✨ Welcome to MovieExplorer</h2>
+                    <p>Search for a movie or browse our curated sections below</p>
+                </div>
             </div>
         </section>
 
+        <!-- SIMILAR MOVIES / RECOMMENDATIONS SECTION -->
+        <div id="recommendations-section" style="display: none;">
+            <!-- Will show DeepSeek recommendations -->
+        </div>
     </main>
 
-    <!-- ========================================== -->
+    <!-- MOVIE DETAILS MODAL -->
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
-    <!-- ========================================== -->
     <footer class="footer">
-        <p>© 2026 MovieExplorer | Built with Modern JS Architecture</p>
+        <p>© 2026 MovieExplorer | Powered by DeepSeek AI</p>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- ES MODULE ENTRY POINT -->
-    <!-- ========================================== -->
+    <!-- ES MODULES -->
     <script type="module" src="./js/main.js"></script>
-
 </body>
 </html>
-
