@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Explorer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+
+    <!-- ========================================== -->
+    <!-- HEADER -->
+    <!-- ========================================== -->
+    <header class="navbar">
+        <div class="logo">
+            🎬 MovieExplorer
+        </div>
+
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- MAIN CONTAINER -->
+    <!-- ========================================== -->
+    <main class="container">
+
+        <!-- HERO -->
+        <section class="hero">
+            <h1>Discover Your Next Favorite Movie</h1>
+            <p>Search. Explore. Experience cinema beautifully.</p>
+
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    placeholder="Search for a movie..."
+                    autocomplete="off"
+                >
+                <button id="search-btn" class="btn-primary">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- MOVIE RESULT -->
+        <section class="movie-section">
+            <div id="movie-container" class="movie-container">
+                <!-- Movie card will render here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- FOOTER -->
+    <!-- ========================================== -->
+    <footer class="footer">
+        <p>© 2026 MovieExplorer | Built with Modern JS Architecture</p>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- ES MODULE ENTRY POINT -->
+    <!-- ========================================== -->
+    <script type="module" src="./js/main.js"></script>
+
+</body>
+</html>
+
