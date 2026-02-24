@@ -24,6 +24,9 @@ export function renderMovie(data, container) {
     const watchlistIcon = inWatchlist ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark';
     const watchlistText = inWatchlist ? 'Saved' : 'Save';
     const watchlistColor = inWatchlist ? '#10b981' : 'var(--color-accent)';
+    
+    // Create YouTube search URL
+    const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(Title + ' ' + Year + ' trailer')}`;
 
     container.innerHTML = `
         <div class="movie-card" style="text-align: center;">
@@ -39,9 +42,9 @@ export function renderMovie(data, container) {
                 <p><strong>Runtime:</strong> ${Runtime || 'N/A'}</p>
                 <p class="plot" style="max-width: 600px; margin: 1rem auto;"><strong>Plot:</strong> ${Plot || 'No plot available.'}</p>
                 <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
-                    <button class="trailer-btn" data-title="${Title}" data-year="${Year}">
-                        <i class="fa-brands fa-youtube"></i> Watch Trailer
-                    </button>
+                    <a href="${youtubeSearchUrl}" target="_blank" class="trailer-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fa-brands fa-youtube"></i> Watch Trailer on YouTube
+                    </a>
                     <button class="watchlist-btn" 
                         data-imdbid="${imdbID}" 
                         data-title="${Title}" 
@@ -105,9 +108,15 @@ export async function renderHomeSections() {
 // Render movie cards for grid
 function renderMovieCards(movies) {
     return movies.map(movie => {
-        const poster = movie.Poster && movie.Poster !== "N/A" 
-            ? movie.Poster 
-            : "https://via.placeholder.com/200x300?text=No+Image";
+        // Better poster handling
+        let posterUrl = "https://via.placeholder.com/200x300?text=No+Poster";
+        
+        if (movie.Poster && movie.Poster !== "N/A") {
+            posterUrl = movie.Poster;
+        } else {
+            // Try to create a poster with movie title
+            posterUrl = `https://via.placeholder.com/200x300/0f1c3d/ffffff?text=${encodeURIComponent(movie.Title.substring(0, 15))}`;
+        }
         
         const rating = movie.imdbRating && movie.imdbRating !== "N/A" 
             ? `⭐ ${movie.imdbRating}` 
@@ -115,7 +124,7 @@ function renderMovieCards(movies) {
         
         return `
             <div class="movie-card-small" data-title="${movie.Title}" data-imdbid="${movie.imdbID || ''}">
-                <img src="${poster}" alt="${movie.Title}" loading="lazy" style="margin: 0 auto;">
+                <img src="${posterUrl}" alt="${movie.Title}" loading="lazy" style="margin: 0 auto; background: var(--royal);">
                 <div class="movie-info">
                     <h4>${movie.Title}</h4>
                     <div class="year">${movie.Year}</div>
@@ -129,7 +138,7 @@ function renderMovieCards(movies) {
 // Render recommendations - CENTERED
 export function renderRecommendations(recommendations, container) {
     if (!recommendations || recommendations.length === 0) {
-        container.style.display = 'none';
+        if (container) container.style.display = 'none';
         return;
     }
 
@@ -160,6 +169,8 @@ export function renderRecommendations(recommendations, container) {
 
 // Show loading state - CENTERED
 export function showLoadingState(container) {
+    if (!container) return;
+    
     container.innerHTML = `
         <div class="loading-card" style="text-align: center; padding: 2rem;">
             <div class="loader" style="margin: 0 auto;"></div>
@@ -203,3 +214,13 @@ export function showSectionSkeleton() {
         </div>
     `;
 }
+
+// Export all functions
+export default {
+    renderMovie,
+    renderHomeSections,
+    renderRecommendations,
+    showLoadingState,
+    showErrorMessage,
+    showSectionSkeleton
+};

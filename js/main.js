@@ -1,7 +1,7 @@
 import { getMovieByTitle } from './api/omdb.js';
 import { getMovieRecommendations } from './api/deepseek.js';
 import { renderMovie, showLoadingState, showErrorMessage, renderHomeSections, renderRecommendations } from './ui/render.js';
-import { toggleTheme, loadSavedTheme, initTheme } from './theme/theme.js';  // Added initTheme
+import { toggleTheme, loadSavedTheme, initTheme } from './theme/theme.js';
 import { setupModal } from './components/movieModal.js';
 import { setupSearchSuggestions } from './components/searchSuggestions.js';
 import { renderWatchlistPage, getWatchlist, updateWatchlistBadge } from './services/watchlist.js';
@@ -108,8 +108,8 @@ function setupEventListeners() {
     // Watchlist button clicks (delegation)
     document.addEventListener('click', handleWatchlistButtonClick);
     
-    // Trailer button clicks (delegation)
-    document.addEventListener('click', handleTrailerButtonClick);
+    // NOTE: Trailer buttons are now <a> tags, so they work naturally
+    // No need for a JavaScript handler - they open in new tab automatically
 }
 
 // Handle search
@@ -214,21 +214,6 @@ function handleWatchlistButtonClick(e) {
         }
         updateWatchlistBadge();
     });
-}
-
-// Handle trailer button clicks
-function handleTrailerButtonClick(e) {
-    const trailerBtn = e.target.closest('.trailer-btn');
-    if (!trailerBtn) return;
-    
-    e.preventDefault();
-    
-    const title = trailerBtn.dataset.title;
-    const year = trailerBtn.dataset.year;
-    
-    if (title && year) {
-        showTrailerModal(title, year);
-    }
 }
 
 // Handle suggestion click from search

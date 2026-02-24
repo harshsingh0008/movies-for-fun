@@ -1,38 +1,64 @@
+// Simple YouTube redirect - no embed, just open in new tab
+
+// Show trailer by opening YouTube search in new tab
 export function showTrailerModal(movieTitle, movieYear) {
+    // Create YouTube search query
     const searchQuery = encodeURIComponent(`${movieTitle} ${movieYear} official trailer`);
-    const trailerUrl = `https://www.youtube.com/embed?listType=search&list=${searchQuery}`;
+    const youtubeUrl = `https://www.youtube.com/results?search_query=${searchQuery}`;
     
-    let trailerModal = document.getElementById('trailer-modal');
+    // Open in new tab
+    window.open(youtubeUrl, '_blank');
     
-    if (!trailerModal) {
-        trailerModal = document.createElement('div');
-        trailerModal.id = 'trailer-modal';
-        trailerModal.className = 'modal';
-        trailerModal.innerHTML = `
-            <div class="modal-content trailer-content">
-                <span class="close-trailer">&times;</span>
-                <iframe id="trailer-iframe" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
-            </div>
-        `;
-        document.body.appendChild(trailerModal);
-        
-        // Close button
-        trailerModal.querySelector('.close-trailer').addEventListener('click', () => {
-            trailerModal.style.display = 'none';
-            document.getElementById('trailer-iframe').src = '';
-        });
-        
-        // Click outside to close
-        window.addEventListener('click', (e) => {
-            if (e.target === trailerModal) {
-                trailerModal.style.display = 'none';
-                document.getElementById('trailer-iframe').src = '';
-            }
-        });
-    }
-    
-    // Set video and show modal
-    const iframe = document.getElementById('trailer-iframe');
-    iframe.src = trailerUrl;
-    trailerModal.style.display = 'block';
+    console.log(`Opening trailer for: ${movieTitle} (${movieYear})`);
 }
+
+// Get YouTube search link (useful for <a> tags)
+export function getTrailerLink(movieTitle, movieYear) {
+    const searchQuery = encodeURIComponent(`${movieTitle} ${movieYear} official trailer`);
+    return `https://www.youtube.com/results?search_query=${searchQuery}`;
+}
+
+// Alternative: If you want to keep the modal but with a link
+export function showTrailerLink(movieTitle, movieYear) {
+    return getTrailerLink(movieTitle, movieYear);
+}
+
+// Get YouTube search URL
+export function getYouTubeSearchUrl(movieTitle, movieYear) {
+    return getTrailerLink(movieTitle, movieYear);
+}
+
+// Open multiple trailer options (official, teaser, etc.)
+export function showTrailerOptions(movieTitle, movieYear) {
+    const baseTitle = encodeURIComponent(`${movieTitle} ${movieYear}`);
+    
+    const options = {
+        official: `https://www.youtube.com/results?search_query=${baseTitle}+official+trailer`,
+        teaser: `https://www.youtube.com/results?search_query=${baseTitle}+teaser`,
+        clip: `https://www.youtube.com/results?search_query=${baseTitle}+clip`
+    };
+    
+    // Open official trailer by default
+    window.open(options.official, '_blank');
+    
+    // Log all options for debugging
+    console.log('Trailer options:', options);
+    
+    return options;
+}
+
+// For backward compatibility with any code still using the old modal
+export function setupTrailerModal() {
+    console.log('Trailer modal disabled - using redirects instead');
+    // No setup needed - we're using redirects
+}
+
+// Export all functions as default
+export default {
+    showTrailerModal,
+    getTrailerLink,
+    showTrailerLink,
+    getYouTubeSearchUrl,
+    showTrailerOptions,
+    setupTrailerModal
+};
